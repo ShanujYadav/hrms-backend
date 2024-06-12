@@ -19,9 +19,7 @@ import empRouter from './routes/emp.routes.js'
 import { hmacVal } from './utils/encrpytion.js'
 
 
-
 console.log('hmacVal---',hmacVal)
-
 
 
 //--------- Routes Declaration ---------
@@ -31,5 +29,6 @@ app.use('/altaneo/hrms/emp',empRouter)
 app.get('/',(req,res)=>{
     res.send('ha bhai')
 })
+
 
 export {app}

@@ -40,16 +40,15 @@ const reqForRegister = asyncHandler(async (req, res) => {
     const existedUser = await Emp.findOne({
         $or: [{ phone }, { email }]
     })
+
     if (existedUser) {
         throw new ApiError(409, "User is Already Exists")
     }
     // Check For img
     const imgLocalPath = req.files?.img[0]?.path
-
     if (!imgLocalPath) {
         throw new ApiError(400, "ProfileImage  is Required !")
     }
-
     // Upload file on Cloudinary
     const profileImage = await uploadOnCloudinary(imgLocalPath)
 
@@ -97,18 +96,14 @@ const reqRegisterList = asyncHandler(async (req, res) => {
         )
     }
     return res.status(200).json(
-        new ApiResponse('000', "All Employee List", allReq)
+        new ApiResponse('000', "Pending Request List", allReq)
     )
 })
 
 
-
-
-
-
-
 const approvedReq = asyncHandler(async (req, res) => {
     const { id } = req.body
+    console.log('req----',req.body)
     if (!id) {
         throw new ApiError(404, "Id is Required")
     }

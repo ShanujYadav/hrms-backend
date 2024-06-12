@@ -14,13 +14,12 @@ router.route('/reqForRegister').post(
             maxCount: 1
         },
     ]),
-   validateHeaders,reqForRegister)
+   reqForRegister)
 
-
-router.route('/reqRegisterList').post(validateHeaders,reqRegisterList)
-router.route('/approvedReq').post(validateHeaders, approvedReq)
-router.route('/empList').post(validateHeaders,empList)
-router.route('/login').post(validateHeaders,loginEmp)
+router.route('/reqRegisterList').post(reqRegisterList)
+router.route('/approvedReq').post(approvedReq)
+router.route('/empList').post(empList)
+router.route('/login').post(loginEmp)
 
 
 // Secure Routes
