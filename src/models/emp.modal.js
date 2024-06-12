@@ -59,11 +59,18 @@ const empSchema = new Schema({
         type: Boolean,
         required: true,
     },  
-    refreshToken: {
+    education: {
         type: String,
-    },
+        required: true,
+        trim: true,
+    },  
+    refreshToken: { 
+        type: String,
+    },  
 },
     { timestamps: true })
+
+
 
 empSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next()
@@ -91,6 +98,7 @@ empSchema.methods.genrateAccessToken = function () {
         }
     )
 }
+
 
 empSchema.methods.genrateRefreshToken = function () {
     return jwt.sign({
