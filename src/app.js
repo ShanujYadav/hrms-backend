@@ -17,17 +17,16 @@ app.use(cookieParser())
 // Routes Import
 import empRouter from './routes/emp.routes.js'
 import { hmacVal } from './utils/encrpytion.js'
-
-
-console.log('hmacVal---',hmacVal)
-
+import leaveRouter from './routes/leave.routes.js'
 
 //--------- Routes Declaration ---------
 app.use('/altaneo/hrms/emp',empRouter)
 
+app.use('/altaneo/hrms/leave',leaveRouter)
+
 
 app.get('/',(req,res)=>{
-    res.send('ha bhai')
+    res.send('Ha bhai')
 })
 
 

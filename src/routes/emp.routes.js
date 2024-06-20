@@ -22,6 +22,7 @@ router.route('/empList').post(empList)
 router.route('/login').post(loginEmp)
 
 
+
 // Secure Routes
 router.route('/logout').post(verifyUser, logoutEmp)
 

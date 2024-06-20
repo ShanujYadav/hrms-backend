@@ -50,6 +50,11 @@ const empSchema = new Schema({
         required: true,
         trim: true,
     },
+    gender: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     password: {
         type: String,
         required: [true, "Passowrd is Required"],

@@ -1,10 +1,8 @@
 import { Emp } from "../models/emp.modal.js"
 import { ApiResponse } from '../utils/ApiResponse.js'
 import { uploadOnCloudinary } from "../utils/Cloudinary.js"
-import { ApiError } from "../utils/apiError.js"
+import { ApiError } from "../utils/ApiError.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
-
-
 
 
 
@@ -22,12 +20,11 @@ const genrateAccessAndRefreshToken = async (userId) => {
     }
 }
 
-
 const reqForRegister = asyncHandler(async (req, res) => {
-    const { name, phone, role, dateOfBirth, joiningDate, email, address, password, img ,education} = req.body
+    const { name, phone, role, dateOfBirth, joiningDate, email, address, password, img ,education,gender} = req.body
 
     // check for Empty Values
-    if ([name, phone, role, dateOfBirth, joiningDate, email, address, password, img,education].some((field) =>
+    if ([name, phone, role, dateOfBirth, joiningDate, email, address, password, img,education,gender].some((field) =>
         field?.trim() === '')
     ) {
         // throw new ApiError(400, "All fields is Required !")
@@ -42,21 +39,24 @@ const reqForRegister = asyncHandler(async (req, res) => {
     if (existedUser) {
         return res.status(409).json(
             new ApiResponse(409, "User is Already Exists !"))
-
     }
+    
     // Check For img
     const imgLocalPath = req.files?.img[0]?.path
     if (!imgLocalPath) {
         return res.status(400).json(
             new ApiResponse(400, "ProfileImage  is Required !"))
     }
+
     // Upload file on Cloudinary
     const profileImage = await uploadOnCloudinary(imgLocalPath)
     if (!profileImage) {
         return res.status(400).json(
             new ApiResponse(400, "Image  is Required !"))
     }
+
     //Create Entry in DB
+
     const user = await Emp.create({
         name,
         phone,
@@ -67,18 +67,21 @@ const reqForRegister = asyncHandler(async (req, res) => {
         address,
         password,
         education,
+        gender,
         img: profileImage.url,
         adminApproved: false
     })
+
     const createdUser = await Emp.findById(user._id).select(
         '-password -refreshToken'
     )
+
     // Check if User Created
     if (!createdUser) {
         throw new ApiError(500, "Something Went Wrong While creating User")
     }
     return res.status(200).json(
-        new ApiResponse('000', "User Registered SuccessFully", createdUser)
+        new ApiResponse('000', "Register Request Sent Successfully", createdUser)
     )
 })
 
@@ -94,6 +97,7 @@ const reqRegisterList = asyncHandler(async (req, res) => {
         new ApiResponse('000', "Pending Request List", allReq)
     )
 })
+
 
 
 const approvedReq = asyncHandler(async (req, res) => {
@@ -133,10 +137,7 @@ const loginEmp = asyncHandler(async (req, res) => {
     }
 
     const { accessToken, refreshToken } = await genrateAccessAndRefreshToken(user._id)
-
-    console.log("accessToken=----", accessToken)
-    console.log("refreshToken----", refreshToken)
-
+    
     // find user and remove password and refreshToken from them
     const loggedInUser = await Emp.findById(user._id).select("-password -refreshToken")
 
@@ -158,8 +159,6 @@ const loginEmp = asyncHandler(async (req, res) => {
         },
         ))
 })
-
-
 
 
 
