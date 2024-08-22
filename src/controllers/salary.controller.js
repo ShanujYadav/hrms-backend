@@ -18,6 +18,8 @@ const addSalary = asyncHandler(async (req, res) => {
             otherAllowance
         }
         const employee = await EmpSalary.findOne({ employeeId })
+        console.log(employee)
+        
 
         if (employee) {
             const yearData = employee.years.get(year.toString()) ||[]
@@ -90,7 +92,6 @@ const getSalary = asyncHandler(async(req,res) => {
         return res.status(200).json(
             new ApiResponse('000', `Salary data for ${month} ${year}`, monthData)
         )
-
     } catch (error) {
         return res.status(500).json(
             new ApiResponse(500,'Error fetching salary data', error)
