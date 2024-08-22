@@ -1,0 +1,7 @@
+*.env
+.env
+/node_modules
+./dist
+
+
+mongodb+srv://shanujyadav:<password>@altaneohrms.jy1nw6a.mongodb.net/?retryWrites=true&w=majority&appName=altaneoHrms
