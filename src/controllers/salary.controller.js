@@ -98,4 +98,5 @@ const getSalary = asyncHandler(async(req,res) => {
     }
 })
 
+
 export { addSalary, getSalary }
