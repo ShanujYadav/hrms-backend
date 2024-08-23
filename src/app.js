@@ -28,8 +28,7 @@ import salaryRouter from './routes/salary.routes.js'
 //--------- Routes Declaration ---------
 app.use('/altaneo/hrms/emp',empRouter)
 app.use('/altaneo/hrms/leave',leaveRouter)
-app.use('/altaneo/hrms/salarySlip',salaryRouter)
-
+app.use('/altaneo/hrms/salary',salaryRouter)
 
 
 app.get('/',(req,res)=>{

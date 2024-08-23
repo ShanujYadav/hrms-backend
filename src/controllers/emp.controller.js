@@ -163,7 +163,6 @@ const loginEmp = asyncHandler(async (req, res) => {
 
 const empList = asyncHandler(async (req, res) => {
     const allEmp = await Emp.find({ 'adminApproved': true }).select("-password -refreshToken")
-    console.log('allEmp-----',allEmp)
     if (!allEmp) {
         return res.status(204).json(
             new ApiResponse(204, "Not Registred Employee")

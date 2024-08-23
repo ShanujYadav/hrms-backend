@@ -5,7 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 const addSalary = asyncHandler(async (req, res) => {
     const { employeeId, year, month, baseSalary, hra, otherAllowance } = req.body
-
+    
     if (!employeeId || !year || !month || !baseSalary || !hra || !otherAllowance) {
         return res.status(400).json(
             new ApiResponse(400, "All fields is Required !"))
@@ -18,9 +18,7 @@ const addSalary = asyncHandler(async (req, res) => {
             otherAllowance
         }
         const employee = await EmpSalary.findOne({ employeeId })
-        console.log(employee)
         
-
         if (employee) {
             const yearData = employee.years.get(year.toString()) ||[]
             const existingMonth = yearData.find(salary => salary.month.toLowerCase() === month.toLowerCase())
@@ -29,7 +27,6 @@ const addSalary = asyncHandler(async (req, res) => {
                     new ApiResponse(400, `Salary data for ${month} ${year} already exists`)
                 )
             }
-
             yearData.push(salaryDetail)
             employee.years.set(year.toString(), yearData)
             await employee.save()
@@ -58,6 +55,12 @@ const addSalary = asyncHandler(async (req, res) => {
 
 
 
+
+
+
+
+
+
 const getSalary = asyncHandler(async(req,res) => {
     const { employeeId, year, month } = req.body
 
@@ -70,9 +73,8 @@ const getSalary = asyncHandler(async(req,res) => {
         const employee = await EmpSalary.findOne({ employeeId });
 
         if (!employee) {
-
             return res.status(404).json(
-                new ApiResponse(404, 'Employee not found')
+                new ApiResponse(404, 'Salary Data Not Exist !')
             )
         }
         const yearData = employee.years.get(year.toString()); 
