@@ -7,5 +7,4 @@ const salaryRouter = Router()
 salaryRouter.route('/addSalary').post(addSalary)
 salaryRouter.route('/getSalary').post(getSalary)
 
-
 export default salaryRouter

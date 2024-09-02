@@ -53,22 +53,13 @@ const addSalary = asyncHandler(async (req, res) => {
 })
 
 
-
-
-
-
-
-
-
-
+ 
 const getSalary = asyncHandler(async(req,res) => {
     const { employeeId, year, month } = req.body
-
     if (!employeeId || !year || !month) {
         return res.status(400).json(
             new ApiResponse(400, "All fields is Required !"))
     }
-
     try {
         const employee = await EmpSalary.findOne({ employeeId });
 

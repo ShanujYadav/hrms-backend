@@ -39,8 +39,8 @@ const reqForLeave = asyncHandler(async (req, res) => {
                     'toDate': toDate,
                     'leaveType': leaveType,
                     'leaveDays': leaveDays,
-                    'applicationStatus':'Pending',
-                    'leaveApproved':false,
+                    'applicationStatus': 'Pending',
+                    'leaveApproved': false,
                 })
             if (!leaveData) {
                 return res.status(404).json(new ApiResponse(404, "Something Went Wrong !"))
@@ -48,7 +48,7 @@ const reqForLeave = asyncHandler(async (req, res) => {
             return res.status(200).json(new ApiResponse('000', "Request Sent Sucessfully", leaveData))
         }
     } catch (error) {
-        console.log(error);
+        return res.status(500).json(new ApiResponse(500, "Something went wrong !",))
     }
 
     const leave = await Leave.create({
@@ -58,16 +58,12 @@ const reqForLeave = asyncHandler(async (req, res) => {
         toDate,
         leaveType,
         leaveDays,
-        applicationStatus:'Pending',
+        applicationStatus: 'Pending',
     })
     return res.status(200).json(
         new ApiResponse('000', "Request Sent SuccessFully", leave)
     )
 })
-
-
-
-
 
 
 
@@ -89,9 +85,9 @@ const approvedLeave = asyncHandler(async (req, res) => {
         const findData = await Leave.findOne({
             $or: [{ applicantId }]
         })
-        if(!findData){
+        if (!findData) {
             return res.status(404).json(new ApiResponse(404, "Something Went Wrong !"))
-        } 
+        }
         totalLeave = findData.totalTakenLeave + Number(leaveDays)
         if (leaveType == 'Casual Leave') {
             CL = findData.casualLeave + Number(leaveDays)
@@ -109,14 +105,14 @@ const approvedLeave = asyncHandler(async (req, res) => {
                 'casualLeave': CL,
                 'sickLeave': SL,
                 'totalTakenLeave': totalLeave,
-                'applicationStatus':'Success',
+                'applicationStatus': 'Success',
             })
         if (!approvedLeave) {
             return res.status(404).json(new ApiResponse(404, "Something Went Wrong !"))
         }
         return res.status(200).json(new ApiResponse('000', "Leaave Approved Sucessfully", approvedLeave))
     } catch (e) {
-        console.log(e)
+        return res.status(500).json(new ApiResponse(500, "Something went wrong !",))
     }
 })
 
@@ -125,36 +121,41 @@ const approvedLeave = asyncHandler(async (req, res) => {
 
 
 const leaveStatus = asyncHandler(async (req, res) => {
-    const {applicantId}=req.body
-    const leaveData = await Leave.findOne({
-        $or: [{ applicantId }]
-    })    
+    try {
+        const { applicantId } = req.body
+        const leaveData = await Leave.findOne({
+            $or: [{ applicantId }]
+        })
+        if (!leaveData) {
+            return res.status(201).json(
+                new ApiResponse(201, "Data not Found !", []))
+        }
 
-    if (!leaveData) {
-        return res.status(201).json(
-        new ApiResponse(201, "Data not Found !",[]))
+        return res.status(200).json(
+            new ApiResponse('000', "Leave Appliction Status", leaveData)
+        )
+    } catch (error) {
+        return res.status(500).json(new ApiResponse(500, "Something went wrong !",))
     }
-
-    return res.status(200).json(
-        new ApiResponse('000', "Leave Appliction Status", leaveData)
-    )
 })
 
 
 
 const reqleaveList = asyncHandler(async (req, res) => {
-    const allReq = await Leave.find({ 'leaveApproved': false })
-    if (!allReq) {
-        return res.status(204).json(
-            new ApiResponse(204, "Not Pending  Leave")
+    try {
+        const allReq = await Leave.find({ 'leaveApproved': false })
+        if (!allReq) {
+            return res.status(204).json(
+                new ApiResponse(204, "Not Pending  Leave")
+            )
+        }
+        return res.status(200).json(
+            new ApiResponse('000', "Pending Leave List", allReq)
         )
+    } catch (error) {
+        return res.status(500).json(new ApiResponse(500, "Something went wrong !",))
     }
-    return res.status(200).json(
-        new ApiResponse('000', "Pending Leave List", allReq)
-    )
 })
 
 
-
-
-export { reqForLeave, approvedLeave, reqleaveList,leaveStatus }
+export { reqForLeave, approvedLeave, reqleaveList, leaveStatus }

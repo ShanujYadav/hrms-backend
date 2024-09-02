@@ -9,7 +9,6 @@ leaveRouter.route('/reqForLeave').post(verifyUser, reqForLeave)
 leaveRouter.route('/leaveStatus').post(verifyUser,leaveStatus)
 
 
-
 //Fetch by Admin
 leaveRouter.route('/reqleaveList').post(reqleaveList)
 leaveRouter.route('/approvedLeave').post(approvedLeave)
