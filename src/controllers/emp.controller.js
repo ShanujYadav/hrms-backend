@@ -246,16 +246,40 @@ const updateEmpInfo = asyncHandler(async (req, res) => {
         if (!updatedUser) {
             return res.status(404).json(
                 new ApiResponse(404, "Employee not found!")
-            );
+            )
         }
         return res.status(200).json(
-            new ApiResponse('000', "Information updated successfully", updatedUser)
+            new ApiResponse('000', "Updated Successfully", updatedUser)
         )
     } catch (error) {
         return res.status(500).json(new ApiResponse(500, "Something went wrong !",))
     }
 })
 
+
+const deleteEmp = asyncHandler(async (req, res) => {
+    const { id } = req.body
+    if (!id) {
+        return res.status(404).json(
+            new ApiResponse(404, "Id not found!")
+        )
+    }
+    try {
+        const deletedUser = await Emp.findByIdAndDelete(id);
+        if (!deletedUser) {
+            return res.status(404).json(
+                new ApiResponse(404, "User not found!")
+            )
+        }
+        return res.status(200).json(
+            new ApiResponse('000', "User deleted successfully", deletedUser)
+        )
+    } catch (error) {
+        return res.status(500).json(
+            new ApiResponse(500, "Something went wrong!")
+        )
+    }
+})
 
 // ----------Logout User--------
 const logoutEmp = asyncHandler(async (req, res) => {
@@ -284,4 +308,4 @@ const logoutEmp = asyncHandler(async (req, res) => {
         return res.status(500).json(new ApiResponse(500, "Something went wrong !",))
     }
 })
-export { loginEmp, logoutEmp, empList, reqForRegister, reqRegisterList, approvedReq, updateEmpInfo }
+export { loginEmp, logoutEmp, empList, reqForRegister, reqRegisterList, approvedReq, updateEmpInfo, deleteEmp }

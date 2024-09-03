@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {  approvedReq, empList, loginEmp, logoutEmp, reqForRegister, reqRegisterList, updateEmpInfo } from "../controllers/emp.controller.js";
+import {  approvedReq, deleteEmp, empList, loginEmp, logoutEmp, reqForRegister, reqRegisterList, updateEmpInfo } from "../controllers/emp.controller.js";
 import { verifyUser } from "../middlewares/verifyUser.js";
 import { upload } from "../middlewares/multer.middle.js";
 import { validateHeaders } from "../middlewares/validateHeaders.js";
@@ -19,10 +19,9 @@ router.route('/reqForRegister').post(
 router.route('/reqRegisterList').post(reqRegisterList)
 router.route('/updateEmpInfo').post(updateEmpInfo)
 router.route('/approvedReq').post(approvedReq)
+router.route('/deleteEmp').post(deleteEmp)
 router.route('/empList').post(empList)
 router.route('/login').post(loginEmp)
-
-
 
 // Secure Routes
 router.route('/logout').post(verifyUser, logoutEmp)
