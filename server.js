@@ -1,5 +1,5 @@
-import { app } from './app.js'
-import connectDB from './db/connectDb.js'
+import { app } from './src/app.js'
+import connectDB from './src/db/connectDb.js'
 import dotenv from 'dotenv'
 
 

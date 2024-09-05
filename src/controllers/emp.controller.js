@@ -40,7 +40,7 @@ const reqForRegister = asyncHandler(async (req, res) => {
         }
 
         // Check For img
-        const imgLocalPath = req.files?.img[0]?.path
+        const imgLocalPath = req.files?.img[0]?.path        
         if (!imgLocalPath) {
             return res.status(400).json(
                 new ApiResponse(400, "ProfileImage  is Required !"))
@@ -257,7 +257,7 @@ const updateEmpInfo = asyncHandler(async (req, res) => {
 })
 
 
-const deleteEmp = asyncHandler(async (req, res) => {
+const deleteEmp = asyncHandler(async (req, res) => {    
     const { id } = req.body
     if (!id) {
         return res.status(404).json(
