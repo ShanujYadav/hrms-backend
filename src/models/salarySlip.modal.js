@@ -6,19 +6,59 @@ const salaryDetailSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    workingDays: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    leaveDays: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    absenceDays: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     baseSalary: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
+    },
+    allowance: {
+        type: Number,
+        required: true,
+        default: 0
     },
     hra: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
-    otherAllowance: {
+    otherEarnings: {
         type: Number,
-        required: true
-    }
+        required: true,
+        default: 0
+    },
+    incomeTax: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    pf: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    otherDeductions: {
+        type: Number,
+        required: true,
+        default: 0
+    },
 })
+
+
 
 const empSalarySchema = new mongoose.Schema({
     employeeId: {

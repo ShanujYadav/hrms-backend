@@ -1,4 +1,4 @@
-import { app } from './src/app.js'
+import { app } from './app.js'
 import connectDB from './src/db/connectDb.js'
 import dotenv from 'dotenv'
 
@@ -7,8 +7,12 @@ dotenv.config({
     path:'../env'
 })
 
-connectDB()
+app.get('/',(req,res)=>{
+    res.send('Ha bhai')
+})
 
+
+connectDB()
 
 .then(()=>{
     app.listen(process.env.PORT|| 8000,()=>{
