@@ -21,8 +21,8 @@ const genrateAccessAndRefreshToken = async (userId) => {
 }
 
 const reqForRegister = asyncHandler(async (req, res) => {
-    const { name, phone, role, dateOfBirth, joiningDate, email, address, password, img, education, gender } = req.body
-    if ([name, phone, role, dateOfBirth, joiningDate, email, address, password, img, education, gender].some((field) =>
+    const { name, phone, role, dateOfBirth, joiningDate, email, address, password, img, education, gender, pan, pfNo } = req.body
+    if ([name, phone, role, dateOfBirth, joiningDate, email, address, password, img, education, gender, pan].some((field) =>
         field?.trim() === '')
     ) {
         return res.status(400).json(
@@ -40,7 +40,7 @@ const reqForRegister = asyncHandler(async (req, res) => {
         }
 
         // Check For img
-        const imgLocalPath = req.files?.img[0]?.path        
+        const imgLocalPath = req.files?.img[0]?.path
         if (!imgLocalPath) {
             return res.status(400).json(
                 new ApiResponse(400, "ProfileImage  is Required !"))
@@ -54,7 +54,6 @@ const reqForRegister = asyncHandler(async (req, res) => {
         }
 
         //Create Entry in DB
-
         const user = await Emp.create({
             name,
             phone,
@@ -66,6 +65,8 @@ const reqForRegister = asyncHandler(async (req, res) => {
             password,
             education,
             gender,
+            pan,
+            pfNo,
             img: profileImage.url,
             adminApproved: false
         })
@@ -257,7 +258,7 @@ const updateEmpInfo = asyncHandler(async (req, res) => {
 })
 
 
-const deleteEmp = asyncHandler(async (req, res) => {    
+const deleteEmp = asyncHandler(async (req, res) => {
     const { id } = req.body
     if (!id) {
         return res.status(404).json(

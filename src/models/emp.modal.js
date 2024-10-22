@@ -45,6 +45,16 @@ const empSchema = new Schema({
         unique: true,
         trim: true,
     },
+    pan: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+    },
+    pfNo: {
+        type: String,
+        trim: true,
+    },
     address: {
         type: String,
         required: true,
@@ -63,15 +73,15 @@ const empSchema = new Schema({
     adminApproved: {
         type: Boolean,
         required: true,
-    },  
+    },
     education: {
         type: String,
         required: true,
         trim: true,
-    },  
-    refreshToken: { 
+    },
+    refreshToken: {
         type: String,
-    },  
+    },
 },
     { timestamps: true })
 
