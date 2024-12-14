@@ -119,7 +119,6 @@ const approvedLeave = asyncHandler(async (req, res) => {
 
 
 
-
 const leaveStatus = asyncHandler(async (req, res) => {
     try {
         const { applicantId } = req.body

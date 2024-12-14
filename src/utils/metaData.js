@@ -1,7 +1,12 @@
-const date = new Date()
+import moment from "moment"
 
-const ymd = date.getFullYear().toString()
-.concat(String(date.getMonth() + 1).padStart(2, "0"))
-.concat(date.getDate().toString().padStart(2, "0"))
 
-export {ymd}
+const YMD = () => {
+    return moment().format('YYYYMMDD')
+}
+export const ymd = YMD()
+
+
+export const ts = () => {
+    return moment().format('YYYY-MM-DD  h:mm:ss')
+}

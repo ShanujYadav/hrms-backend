@@ -1,19 +1,18 @@
-import express  from 'express'
+import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import { hmacVal } from './src/utils/encrpytion.js'
 
 
-const app=express()
+const app = express()
 
 
 app.use(cors({
-    origin:process.env.CORS_ORIGIN, 
-    credentials:true, 
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
 }))
 
-app.use(express.json({limit:"50mb"}))
-app.use(express.urlencoded({extended:true,limit:"50kb"}))
+app.use(express.json({ limit: "50mb" }))
+app.use(express.urlencoded({ extended: true, limit: "50kb" }))
 app.use(express.static("public"))
 app.use(cookieParser())
 
@@ -25,13 +24,13 @@ import salaryRouter from './src/routes/salary.routes.js'
 
 
 //--------- Routes Declaration ---------
-app.use('/altaneo/hrms/emp',empRouter)
-app.use('/altaneo/hrms/leave',leaveRouter)
-app.use('/altaneo/hrms/salary',salaryRouter)
+app.use('/hrms/altaneo/emp', empRouter)
+app.use('/hrms/altaneo/leave', leaveRouter)
+app.use('/hrms/altaneo/salary', salaryRouter)
 
 
-app.get('/',(req,res)=>{
+app.get('/hrms', (req, res) => {
     res.send('Ha bhai')
 })
 
-export {app}
+export { app }
